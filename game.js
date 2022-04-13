@@ -32,11 +32,25 @@ function drawAll() {
     context.lineTo(2.5 * size, 1.5 * size);
     context.stroke();
     pos += w * delta / 1000;
-    x = 1.5 * size + size * Math.cos(pos * Math.PI / 180);
-    y = 1.5 * size + size * Math.sin(-pos * Math.PI / 180);
+    pos %= 360;
+    var x1 = 1.5 * size + size * Math.cos(pos * Math.PI / 180);
+    var y1 = 1.5 * size + size * Math.sin(-pos * Math.PI / 180);
     context.beginPath();
-    context.arc(x, y, 10, 0, Math.PI * 2);
+    context.arc(x1, y1, 10, 0, Math.PI * 2);
     context.fill();
+    context.beginPath();
+    context.moveTo(3.5 * size, 2.5 * size);
+    context.lineTo(8.5 * size, 2.5 * size);
+    context.stroke();
+    var x2 = 3.5 * size + (pos / 360) * 5 * size;
+    context.beginPath();
+    context.arc(x2, y1, 10, 0, Math.PI * 2);
+    context.fill();
+    context.beginPath();
+    context.moveTo(x1, y1);
+    context.lineTo(x2, y1);
+    context.stroke();
+    // let x2
     setDelta();
     console.log(delta);
     window.requestAnimationFrame(drawAll);
@@ -70,7 +84,5 @@ var canvas;
 var context = setUpContext();
 var w = 36; // degrees/second
 var pos = 0; // degrees
-var x = 1; // units
-var y = 0; // units
 var size = canvas.width / 9;
 window.requestAnimationFrame(drawAll);
